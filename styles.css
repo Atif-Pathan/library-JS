@@ -76,8 +76,8 @@ ol[role="list"], ul[role="list"] {
 
 .add-book-form {
     background-color: var(--accent-color-one);
-    display: grid;
-    width: 25%;
+    display: none;
+    width: 30%;
     padding: 1rem;
     border: none;
     border-radius: 20px;
@@ -149,13 +149,95 @@ input:focus{
     gap: 0.7rem;
 }
 
-.form-row:nth-child(6) {
+.form-row:nth-child(7) {
     grid-column: 2/4;
     padding-right: 0.5rem;
     align-self: center;
 }
 
-.form-row:nth-child(7) {
+.form-row:nth-child(8) {
     padding-left: 0.5rem;
     align-self: center;
 }
+
+.form-row > button {
+    border-radius: 10px;
+    /* background: transparent; */
+}
+
+/* Main layout for the rating group */
+.rating-group {
+    grid-column: span 5;
+    justify-self: center;
+    transform: translateX(-0.45rem);
+    align-self: center;
+    display: none;
+  }
+  
+  /* Ensure star icons do not intercept pointer events */
+  .rating__icon {
+    pointer-events: none;
+  }
+  
+  /* Hide radio inputs */
+  .rating__input {
+    position: absolute;
+    left: -9999px;
+  }
+  
+  /* Set icon padding and size */
+  .rating__label {
+    cursor: pointer;
+    padding: 0 0.1em;
+    font-size: 2rem;
+  }
+  
+  /* Adjustments for half-star labels */
+  .rating__label--half {
+    padding-right: 0;
+    margin-right: -0.6em;
+    z-index: 2;
+  }
+  
+  /* Default star color */
+  .rating__icon--star {
+    color: orange;
+  }
+  
+  /* Color for none icon when unchecked */
+  .rating__icon--none {
+    color: #eee;
+  }
+  
+  /* Make none icon red when selected */
+  .rating__input--none:checked + .rating__label .rating__icon--none {
+    color: red;
+  }
+  
+  /* Change following stars to grey once a rating is selected */
+  .rating__input:checked ~ .rating__label .rating__icon--star {
+    color: #ddd;
+  }
+  
+  /* Change all stars to orange when hovering over rating group */
+  .rating-group:hover .rating__label .rating__icon--star,
+  .rating-group:hover .rating__label--half .rating__icon--star {
+    color: orange;
+  }
+  
+  /* Change subsequent stars to grey on hover */
+  .rating__input:hover ~ .rating__label .rating__icon--star,
+  .rating__input:hover ~ .rating__label--half .rating__icon--star {
+    color: #ddd;
+  }
+  
+  /* Make none icon grey on hover (except when hovered) */
+  .rating-group:hover .rating__input--none:not(:hover) + .rating__label .rating__icon--none {
+    color: #eee;
+  }
+  
+  /* Make none icon red on hover */
+  .rating__input--none:hover + .rating__label .rating__icon--none {
+    color: red;
+  }
+  
