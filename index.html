@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="title">Welcome to your Library!</div>
-        <form class="add-book-form">
+        <form id="add-book-form">
             <div class="form-row">
                 <label for="title">Book Title</label>
                 <input id="title" type="text" name="title" required>
@@ -27,13 +27,13 @@
             </div>
 
             <div class="form-row">
-                <label for="book-review">Review</label>
-                <textarea name="review" id="book-review"  wrap="soft"></textarea>
-            </div>
-
-            <div class="form-row">
                 <input type="checkbox" id="book-status" name="book-status">
                 <label for="book-status">Have you finished reading this?</label>
+            </div>
+
+            <div class="form-row book-review-div">
+                <label for="book-review">Review & Rating</label>
+                <textarea name="review" id="book-review"  wrap="soft"></textarea>
             </div>
 
             <div class="rating-group">
