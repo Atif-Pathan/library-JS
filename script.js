@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const addBookForm = document.getElementById("add-book-form");
   const cancelBtn = document.querySelector(".cancel-book-btn");
   const reviewDiv = document.querySelector(".book-review-div");
+  let bookCollection = document.querySelector(".book-collection");
 
   function Book(title, author, pages, review, hasRead, rating) {
       this.title = title;
@@ -30,6 +31,14 @@ document.addEventListener('DOMContentLoaded', function() {
     myLibrary.push(newBook);
     console.log(myLibrary);
     cancelBtn.dispatchEvent(new Event("click"));
+    displayBooks();
+  }
+
+  function displayBooks() {
+    myLibrary.forEach(book => {
+      const card = document.createElement("div");
+      card.classList = "card-body";
+    });
   }
 
   addBookBtn.addEventListener("click", function() {

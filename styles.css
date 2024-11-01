@@ -117,7 +117,11 @@ input:focus{
 
 .form-row:nth-child(2) {
     grid-column: 1/4;
-    padding: 0 0.5rem 0 1rem;
+    padding: 0 0.5rem 0 1rem;  
+}
+
+#author {
+    text-transform: capitalize;
 }
 
 .form-row:nth-child(3) {
@@ -238,3 +242,45 @@ input:focus{
     color: red;
   }
   
+.book-collection {
+    display: grid;
+}
+
+.card-body {
+    border: 3px solid black;
+    border-radius: 15px;
+    height: fit-content;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-author-container {
+
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.card-author {
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.card-status-container {
+
+}
+
+.card-status {
+    font-weight: 400;
+}
+
+.card-pages {
+    font-weight: 300;
+    font-size: 0.8rem;
+    /* text-align: right; */
+}

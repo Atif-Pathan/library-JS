@@ -13,17 +13,17 @@
         <form id="add-book-form">
             <div class="form-row">
                 <label for="title">Book Title</label>
-                <input id="title" type="text" name="title" required>
+                <input id="title" type="text" name="title" required minlength="2" autocorrect="on" autocapitalize="sentences" spellcheck="true">
             </div>
 
             <div class="form-row">
                 <label for="author">Author</label>
-                <input id="author" type="text" name="author" required>
+                <input id="author" type="text" name="author" required minlength="2" autocorrect="on" autocapitalize="sentences" spellcheck="true">
             </div>
 
             <div class="form-row">
                 <label for="pages">Number of Pages</label>
-                <input id="pages" type="number" name="pages" required>
+                <input id="pages" type="number" name="pages" required min="1" max="5000">
             </div>
 
             <div class="form-row">
@@ -33,9 +33,8 @@
 
             <div class="form-row book-review-div">
                 <label for="book-review">Review & Rating</label>
-                <textarea name="review" id="book-review"  wrap="soft"></textarea>
+                <textarea name="review" id="book-review"  wrap="soft" maxlength="600" autocorrect="on" autocapitalize="sentences" spellcheck="true"></textarea>
             </div>
-
             <div class="rating-group">
                 <input class="rating__input rating__input--none" checked name="rating2" id="rating2-0" value="0" type="radio">
                 <label aria-label="0 stars" class="rating__label" for="rating2-0">&nbsp;</label>
@@ -68,7 +67,18 @@
         <div class="add-book">
             <button type="button" class="add-book-btn">Add</button>
         </div>
-        <div class="collection"></div>
+        <div class="book-collection">
+            <div class="card-body">
+                <div class="title-author-container">
+                    <h1 class="card-title">The Hobbit</h1>
+                    <h3 class="card-author">J. R. R. Tolkien</h3>
+                </div>
+                <div class="card-status-container">
+                    <h2 class="card-status">Not finished</h2>
+                </div>
+                <h4 class="card-pages">310 Pages</h4>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
