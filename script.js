@@ -34,9 +34,81 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function displayBooks() {
+    bookCollection.innerHTML = '';
     myLibrary.forEach(book => {
       const card = document.createElement("div");
-      card.classList = "card-body";
+      card.classList.add("card-body");
+
+      const titleAuthorContainer = document.createElement("div");
+      titleAuthorContainer.classList.add("title-author-container");
+
+      const title = document.createElement('h1');
+      title.classList.add('card-title');
+      title.textContent = book.title;
+
+      const italicSection = document.createElement('div');
+      italicSection.classList.add('card-italic-section');
+
+      const author = document.createElement("h3");
+      author.classList.add("card-author")
+      author.textContent = `by ${book.author}`;
+
+      const ratingWrapper = document.createElement('h3');
+      const ratingContainer = document.createElement('div');
+      ratingContainer.classList.add('card-rating');
+
+      let ratingNum = parseFloat(book.rating);
+      let fixedNumber = ratingNum.toFixed(10); 
+      let parts = fixedNumber.split('.'); 
+      let integerPart = parseInt(parts[0]); 
+      let decimalPart = parseFloat('0.' + parts[1]);
+      // add all the full stars
+      for (let index = 0; index < integerPart; index++) {
+        const starIcon = document.createElement('i');
+        starIcon.classList.add('fa-solid', 'fa-star', 'italic-star');
+        ratingContainer.appendChild(starIcon);
+      }
+      // add any half stars if there is one
+      if (decimalPart > 0) {
+        const starIcon = document.createElement('i');
+        starIcon.classList.add('fa-solid', 'fa-star-half', 'italic-star');
+        ratingContainer.appendChild(starIcon);
+      }
+      ratingWrapper.appendChild(document.createTextNode('( '));
+      ratingWrapper.appendChild(ratingContainer);
+      ratingWrapper.appendChild(document.createTextNode(' )'));
+
+      italicSection.appendChild(author);
+      italicSection.appendChild(ratingWrapper);
+
+      titleAuthorContainer.appendChild(title);
+      titleAuthorContainer.appendChild(italicSection);
+
+      const synopsis = document.createElement('p');
+      synopsis.classList.add('card-synopsis');
+      synopsis.textContent = book.synopsis;
+
+      const readMoreCheckbox = document.createElement('input');
+      readMoreCheckbox.type = 'checkbox';
+      readMoreCheckbox.classList.add('icon', 'icon-solid', 'read-more');
+      card.appendChild(readMoreCheckbox);
+
+      const genre = document.createElement("div");
+      genre.classList.add("card-genre");
+      genre.textContent = `Genre: ${book.genre}`;
+
+      // Pages
+      const pages = document.createElement('div');
+      pages.classList.add('card-pages');
+      pages.innerHTML = `${book.pages} <i class="italic-book fa-solid fa-book-open" style="color: #33846c;"></i>`;
+
+      card.appendChild(titleAuthorContainer);
+      card.appendChild(synopsis);
+      card.appendChild(readMoreCheckbox);
+      card.appendChild(genre);
+      card.appendChild(pages);
+
+      bookCollection.appendChild(card);
     });
   }
 
