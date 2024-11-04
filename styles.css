@@ -271,20 +271,31 @@ textarea {
 
 .book-collection {
     display: grid;
+    width: 100%;
     /* flex: 1; */
     padding: 2rem;
     gap: 2rem;
     /* grid-auto-flow: column; */
     /* grid-template-columns: 1fr 1fr 1.5fr; */
     grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
-    grid-template-rows: repeat(auto-fill, minmax(15rem, 1fr));
+    /* grid-template-rows: repeat(auto-fill, minmax(15rem, 1fr)); */
 }
 
 .card-body {
-    border: 3px solid black;
     position: relative;
+    transform-style: preserve-3d;
+    transition: transform 700ms cubic-bezier(0.65, -0.01, 0.2, 1);
+}
+
+.card-body:hover {
+    /* cursor: pointer; */
+}
+
+.card-front {
+    border: 3px solid black;
+    position: absolute;
     border-radius: 15px;
-    min-height: 10rem;
+    min-height: 15rem;
     min-width: 14rem;
     padding: 2rem 1.5rem;
     display: flex;
@@ -292,7 +303,23 @@ textarea {
     gap: 0.7rem;
     background-color: white;
     justify-content: center;
-    position: relative;
+    backface-visibility: hidden;
+}
+
+.card-back {
+    border: 3px solid black;
+    position: absolute;
+    border-radius: 15px;
+    min-height: 15rem;
+    min-width: 14rem;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    background-color: white;
+    justify-content: center;
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
 }
 
 .title-author-container {
@@ -332,8 +359,41 @@ textarea {
     font-size: 0.7rem;
 }
 
-.card-status-container {
+.review-btn {
+    font-size: 0.88rem;
+    font-style: italic;
+    font-weight: bold;
+    color: #b9b9b9;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: scale 70ms linear;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
 
+.back-to-card {
+    font-size: 0.88rem;
+    font-style: italic;
+    font-weight: bold;
+    color: #b9b9b9;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    transition: scale 70ms linear;
+    width: fit-content;
+    align-self: flex-end;
+}
+
+.fa-arrow-right, .fa-arrow-left {
+    transform: skewX(-15deg);
+    padding-top: 0.1rem;
 }
 
 .card-status {
@@ -357,6 +417,46 @@ textarea {
     overflow: hidden;
     position: relative;
     transition: max-height 300ms linear;
+}
+
+.card-review {
+    font-size: 0.85rem;
+    color: #3b3b3b;
+    text-align: justify;
+    overflow-y: auto;
+    max-height: 20rem;
+    padding-right: 0.5rem;
+    white-space: pre-wrap;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .card-review::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .card-review::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 5px;
+    }
+
+    .card-review::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 5px;
+    }
+
+    .card-review::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+        cursor: pointer;
+    }
+}
+
+/* Firefox-specific rules */
+@-moz-document url-prefix() {
+    .card-review {
+        scrollbar-width: thin; 
+        scrollbar-color: #888 #f1f1f1;
+    }
 }
 
 .card-synopsis:has(+ .read-more:not(:checked))::before {

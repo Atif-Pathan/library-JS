@@ -27,7 +27,7 @@
             </div>
 
             <div class="form-row">
-                <label for="genre">Genre</label>
+                <label for="genre">Main Genre</label>
                 <select id="genre" name="genre" required>
                     <option value="" disabled selected>Select Genre</option>
                     <option value="fiction">Fiction</option>
@@ -38,7 +38,13 @@
                     <option value="biography">Biography</option>
                     <option value="romance">Romance</option>
                     <option value="thriller">Thriller</option>
-                    <!-- Add more genres as needed -->
+                    <option value="historical">Historical</option>
+                    <option value="horror">Horror</option>
+                    <option value="self-help">Self-Help</option>
+                    <option value="poetry">Poetry</option>
+                    <option value="young-adult">Young Adult</option>
+                    <option value="children">Children’s</option>
+                    <option value="Dystopia">Dystopia</option>
                 </select>
             </div>
 
@@ -54,7 +60,7 @@
 
             <div class="form-row book-review-div">
                 <label for="book-review">Review & Rating</label>
-                <textarea name="review" id="book-review"  wrap="soft" maxlength="2500" autocorrect="on" autocapitalize="sentences" spellcheck="true"></textarea>
+                <textarea name="review" id="book-review"  wrap="soft" maxlength="2000" autocorrect="on" autocapitalize="sentences" spellcheck="true"></textarea>
             </div>
             
             <div class="rating-group">
@@ -90,27 +96,34 @@
             <button type="button" class="add-book-btn">Add</button>
         </div>
         <div class="book-collection">
-            <!-- <div class="card-body">
-                <div class="title-author-container">
-                    <h1 class="card-title">To Kill a Mockingbird</h1>
-                    <div class="card-italic-section">
-                        <h3 class="card-author">by Harper Lee</h3>
-                        <h3>( <div class="card-rating">
-                            <i class="fa-solid fa-star italic-star"></i>
-                            <i class="fa-solid fa-star italic-star"></i>
-                            <i class="fa-solid fa-star italic-star"></i>
-                            <i class="fa-solid fa-star italic-star"></i>
-                            <i class="fa-solid fa-star italic-star"></i>
-                        </div> )</h3>
+            <div class="card-body">
+                <div class="card-front">
+                    <div class="title-author-container">
+                        <h1 class="card-title">To Kill a Mockingbird</h1>
+                        <div class="card-italic-section">
+                            <h3 class="card-author">by Harper Lee</h3>
+                            <h3>( <div class="card-rating">
+                                <i class="fa-solid fa-star italic-star"></i>
+                                <i class="fa-solid fa-star italic-star"></i>
+                                <i class="fa-solid fa-star italic-star"></i>
+                                <i class="fa-solid fa-star italic-star"></i>
+                                <i class="fa-solid fa-star italic-star"></i>
+                            </div> )</h3>
+                            <button class="review-btn">review<i class="fa-solid fa-arrow-right fa-xs"></i></button>
+                        </div>
+                    </div>
+                    <p class="card-synopsis">Set during the Napoleonic Wars, War and Peace follows the lives of several Russian  growth, the cost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the </p>
+                    <input type="checkbox" class="icon icon-solid read-more">
+                    <div class="card-genre">Genre: Science Fiction</div>
+                    <div class="card-pages">
+                        291 <i class="italic-book fa-solid fa-book-open" style="color: #33846c;"></i>
                     </div>
                 </div>
-                <p class="card-synopsis">Set during the Napoleonic Wars, War and Peace follows the lives of several Russian  growth, the cost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the relentless forces of history, offering a profound explorationcost of ambition, and the </p>
-                <input type="checkbox" class="icon icon-solid read-more">
-                <div class="card-genre">Genre: Science Fiction</div>
-                <div class="card-pages">
-                    291 <i class="italic-book fa-solid fa-book-open" style="color: #33846c;"></i>
+                <div class="card-back">
+                    <p class="card-review">The Catcher in the Rye is a raw, introspective journey through teenage angst and alienation. Holden Caulfield’s sharp and cynical voice captures the struggles of adolescence with an honesty that’s both relatable and jarring. Salinger’s portrayal of Holden’s quest for identity and belonging is compelling, offering a timeless look at the complexities of growing up. While Holden’s attitude may be polarizing, his vulnerability makes this book a powerful read for anyone who has ever felt. Salinger’s portrayal of Holden’s quest for identity and belonging is compelling, offering a timeless look at the complexities of growing up.</p>
+                    <button class="back-to-card"><i class="fa-solid fa-arrow-left fa-xs"></i>back</button>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
