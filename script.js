@@ -1,120 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // using array to store all the books in the library
-  const myLibrary = [
-    new Book(
-        "The Hobbit",
-        "J.R.R. Tolkien",
-        "Fantasy",
-        "Bilbo Baggins, a quiet hobbit, is pulled into an epic quest by the wizard Gandalf to reclaim the lost Dwarven kingdom of Erebor from the dragon Smaug. Along the way, he encounters trolls, elves, and discovers a mysterious ring.",
-        310,
-        "The Hobbit is a truly timeless adventure. Tolkien’s world-building is enchanting, immersing readers in Middle-earth with such vivid detail that it feels almost real. Bilbo’s journey is not just about physical adventure but also personal growth, as he transforms from a reluctant traveler into a hero of courage and wisdom. The interactions with Gollum, the epic journey through Mirkwood, and the showdown with Smaug are all iconic. This is a book that can be read and reread, finding something new each time. Perfect for any fantasy fan, young or old.",
-        true,
-        4.5
-    ),
-    new Book(
-        "1984",
-        "George Orwell",
-        "Dystopian",
-        "Winston Smith lives under the oppressive rule of Big Brother, where thoughts are controlled, and privacy is nonexistent. As he begins questioning the Party, he finds himself entangled in rebellion and forbidden love.",
-        328,
-        "Orwell’s ‘1984’ is an unnervingly relevant commentary on surveillance and authoritarianism. The bleak setting, oppressive control, and deep sense of paranoia create an atmosphere that lingers. Winston’s inner turmoil as he wrestles with his role in this society is hauntingly realistic, and the portrayal of how information is manipulated feels disturbingly accurate in our modern age. This novel is a stark reminder of the value of freedom, individual thought, and human connection.",
-        true,
-        5
-    ),
-    new Book(
-        "Pride and Prejudice",
-        "Jane Austen",
-        "Romance",
-        "Elizabeth Bennet navigates society’s expectations and family pressures while dealing with her complex feelings towards the proud Mr. Darcy. This beloved classic explores themes of love, class, and reputation.",
-        279,
-        null,
-        false,
-        null
-    ),
-    new Book(
-        "The Catcher in the Rye",
-        "J.D. Salinger",
-        "Literary Fiction",
-        "Holden Caulfield, a disaffected teenager, wanders New York City, grappling with issues of identity, belonging, and growing up. His raw narrative reflects the angst and alienation of adolescence.",
-        214,
-        "Holden Caulfield’s narrative captures teenage angst and a sense of alienation like no other. His voice is both sarcastic and vulnerable, which makes his story deeply relatable. While some find Holden insufferable, others see him as a brutally honest reflection of youth. Salinger’s writing is raw and unfiltered, which gives this novel a timeless quality.",
-        true,
-        4
-    ),
-    new Book(
-        "The Da Vinci Code",
-        "Dan Brown",
-        "Thriller",
-        "Robert Langdon and cryptologist Sophie Neveu follow a trail of clues tied to famous artworks and hidden codes, uncovering ancient mysteries. This fast-paced thriller combines art, history, and suspense.",
-        489,
-        "The Da Vinci Code is an exhilarating ride through history, art, and conspiracy. While Brown’s writing style may not be the most literary, his pacing and plot construction are impressive. Each chapter leaves you eager for the next, filled with intriguing puzzles and surprising revelations. For readers who enjoy art history and fast-paced mysteries, this book delivers on suspense, even if it can be polarizing in terms of its historical accuracy.",
-        true,
-        4.5
-    ),
-    new Book(
-        "Twilight",
-        "Stephenie Meyer",
-        "Young Adult Fantasy",
-        "Bella Swan falls in love with Edward Cullen, a vampire. Their romance faces challenges, from supernatural foes to the perils of their relationship itself, as Bella is pulled deeper into a hidden world.",
-        498,
-        "Twilight is a cultural phenomenon, but it’s also divisive. For fans of paranormal romance, it captures the intensity of young love and the allure of the supernatural. For others, it may lack depth and complexity in its characters. Bella and Edward’s romance is often criticized for its unrealistic portrayal of relationships. However, it undeniably strikes a chord with its target audience, delivering on escapism and fantasy.",
-        true,
-        2.5
-    ),
-    new Book(
-        "Fifty Shades of Grey",
-        "E.L. James",
-        "Erotic Romance",
-        "Anastasia Steele meets Christian Grey, a man of wealth and mystery, who introduces her to a complex world of adult relationships and desire. Their relationship explores power and control.Anastasia Steele meets Christian Grey, a man of wealth and mystery, who introduces her to a complex world of adult relationships and desire. Their relationship explores power and control.",
-        514,
-        "Fifty Shades is both praised and criticized. It broke ground in popularizing a genre often kept private, but it also faces criticism for its prose and character dynamics. For those seeking a straightforward romance with elements of suspense, it delivers, but expectations of literary merit should be tempered.",
-        true,
-        2
-    ),
-    new Book(
-        "Moby-Dick",
-        "Herman Melville",
-        "Adventure",
-        "Captain Ahab embarks on a relentless quest to hunt down the elusive white whale, Moby-Dick. This tale is both an adventure and an exploration of obsession and revenge.",
-        635,
-        null,
-        false,
-        null
-    ),
-    new Book(
-        "The Great Gatsby",
-        "F. Scott Fitzgerald",
-        "Classic Fiction",
-        "Nick Carraway recounts his friendship with the enigmatic Jay Gatsby, who harbors a deep longing for his lost love, Daisy. Set in the Jazz Age, this novel examines the allure and emptiness of wealth.",
-        180,
-        "A haunting tale of ambition, love, and loss. Gatsby’s pursuit of Daisy and the American Dream is both tragic and mesmerizing. Fitzgerald’s prose is poetic, beautifully capturing the glitz and sorrow of the Roaring Twenties. This book stays with you long after the final page, and it’s one of the most beautifully written novels of the 20th century.",
-        true,
-        4.5
-    ),
-    new Book(
-        "A Thoughtful Reflection",
-        "Anonymous Author",
-        "Contemporary",
-        "This book provides an introspective journey, offering readers insights into life's quiet moments and the beauty of everyday existence. It's a reflective piece, encouraging the reader to pause and consider the subtle joys around them.",
-        250,
-        "A profound journey through the ordinary and the extraordinary moments of life. The author’s language is serene, inviting readers to slow down and truly savor each chapter. For those looking for something calming and reflective, this book is a gentle reminder of life’s beauty. However, it’s not for readers looking for action or suspense, as its charm lies in its introspection.",
-        true,
-        null // Has a review but no rating
-    ),
-    new Book(
-        "An Average Tale",
-        "Unknown Author",
-        "Fiction",
-        "A simple story with predictable twists and an uninspired plot. The characters feel flat, and there’s little emotional engagement. It’s an average read that doesn’t leave a lasting impression.",
-        300,
-        null,
-        true,
-        null // Read, but no rating or review given
-    )
-];
-
-
-  const tempLibrary = [];
+  const myLibrary = [];
   const addBookBtn = document.querySelector(".add-book-btn");
   const bookStatCheckBox = document.getElementById("book-status");
   const ratingsDiv = document.querySelector(".rating-group");
@@ -124,6 +10,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const bookCollection = document.querySelector(".book-collection");
   const reviewBtn = document.querySelector(".review-btn");
   const backToCardBtn = document.querySelector(".back-to-card");
+  const modal = document.getElementById("add-book-modal");
+  const container = document.querySelector(".container");
+
+  // Close the modal when clicking outside the modal content
+  window.addEventListener("click", function(event) {
+      if (event.target === modal) {
+          modal.style.display = "none";
+          container.classList.remove("blur");
+          addBookForm.reset();
+          bookStatCheckBox.dispatchEvent(new Event("change"));
+      }
+  });
 
   function Book(title, author, genre, synopsis, pages, review, hasRead, rating) {
       this.title = title;
@@ -143,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     else {
       newBook = new Book(data.get("title"), data.get("author"), data.get("genre"), data.get("synopsis"), data.get("pages"), null, false, null);
     }
-    tempLibrary.push(newBook);
+    myLibrary.push(newBook);
     console.log(myLibrary);
     cancelBtn.dispatchEvent(new Event("click"));
     displayBooks();
@@ -277,14 +175,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  displayBooks();
-
   addBookBtn.addEventListener("click", function() {
+    modal.style.display = "block";
     addBookForm.style.display = "grid";
+    container.classList.add("blur");
+    document.getElementById("title").focus(); 
   });
 
   cancelBtn.addEventListener("click", function() {
     addBookForm.style.display = "none";
+    modal.style.display = "none";
+    container.classList.remove("blur");
     addBookForm.reset();
     bookStatCheckBox.dispatchEvent(new Event("change"));
   });
