@@ -79,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const ratingContainer = document.createElement('div');
       ratingContainer.classList.add('card-rating');
 
+      const toggleStatusButton = document.createElement("button");
+
       if (book.rating !== null && book.rating > 0) {
         let ratingNum = parseFloat(book.rating);
         let fixedNumber = ratingNum.toFixed(10); 
@@ -97,20 +99,32 @@ document.addEventListener('DOMContentLoaded', function() {
           starIcon.classList.add('fa-solid', 'fa-star-half', 'italic-star');
           ratingContainer.appendChild(starIcon);
         }
+        ratingWrapper.appendChild(ratingContainer);
+        ratingWrapper.appendChild(document.createTextNode(' )'));
+        toggleStatusButton.innerHTML = 'Status: <i class="fa-solid fa-circle-check" style="color: #228b22;"></i>';
+        toggleStatusButton.classList.add('toggle-status-btn-read');
+        toggleStatusButton.disabled = true;
+        toggleStatusButton.title = "The book has been marked as read - press edit button to edit rating/review";
       }
       else if (book.rating === "0" || book.rating === 0) {
         ratingContainer.textContent = "0 stars";
-      }
-      else if (book.review !== null && book.rating === null) {
-        ratingContainer.textContent = "No rating yet"; 
+        ratingWrapper.appendChild(ratingContainer);
+        ratingWrapper.appendChild(document.createTextNode(' )'));
+        toggleStatusButton.innerHTML = 'Status: <i class="fa-solid fa-circle-check" style="color: #228b22;"></i>';
+        toggleStatusButton.classList.add('toggle-status-btn-read');
+        toggleStatusButton.disabled = true;
+        toggleStatusButton.title = "The book has been marked as read - press edit button to edit rating/review";
       }
       else {
-        ratingContainer.textContent = "Not read yet";
+        ratingContainer.textContent = "No rating yet";
+        ratingWrapper.appendChild(ratingContainer);
+        ratingWrapper.appendChild(document.createTextNode(' )'));
+        toggleStatusButton.innerHTML = 'Status: <i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i>';
+        toggleStatusButton.classList.add('toggle-status-btn-not-read');
+        toggleStatusButton.title = "Press to mark this book as read and add a rating/review";
       }
-      ratingWrapper.appendChild(ratingContainer);
-      ratingWrapper.appendChild(document.createTextNode(' )'));
-
-      if (book.review !== null) {
+      
+      if (book.review !== null && book.review  !== "") {
         const reviewButton = document.createElement('button');
         reviewButton.classList.add('review-btn');
         reviewButton.innerHTML = 'review<i class="fa-solid fa-arrow-right fa-xs"></i>';
@@ -150,26 +164,27 @@ document.addEventListener('DOMContentLoaded', function() {
       cardFront.appendChild(readMoreCheckbox);
       cardFront.appendChild(genre);
       cardFront.appendChild(pages);
+      cardFront.appendChild(toggleStatusButton);
 
       // card back stuff
-      const cardReview = document.createElement('p');
-      cardReview.classList.add('card-review');
+      if (book.hasRead && (book.review !== null || book.review !== "")) {
+        const cardReview = document.createElement('p');
+        cardReview.classList.add('card-review');
+        cardReview.textContent = book.review;
 
-      if (book.hasRead && book.review) {
-          cardReview.textContent = book.review;
-      } else {
-          cardReview.textContent = "No review available.";
+        const backButton = document.createElement('button');
+        backButton.classList.add('back-to-card');
+        backButton.innerHTML = '<i class="fa-solid fa-arrow-left fa-xs"></i>back';
+
+        cardBack.appendChild(cardReview);
+        cardBack.appendChild(backButton);
+
+        card.appendChild(cardFront);
+        card.appendChild(cardBack);
+      }  
+      else {
+        card.appendChild(cardFront);
       }
-
-      const backButton = document.createElement('button');
-      backButton.classList.add('back-to-card');
-      backButton.innerHTML = '<i class="fa-solid fa-arrow-left fa-xs"></i>back';
-
-      cardBack.appendChild(cardReview);
-      cardBack.appendChild(backButton);
-
-      card.appendChild(cardFront);
-      card.appendChild(cardBack);
 
       bookCollection.appendChild(card);
     });

@@ -95,7 +95,7 @@ ol[role="list"], ul[role="list"] {
   cursor: pointer;
   border: 3px solid;
   padding: 0.25em 0.5em;
-  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px;
   border-radius: 7px;
   position: relative;
   user-select: none;
@@ -388,7 +388,7 @@ textarea {
     border-radius: 15px;
     min-height: 15rem;
     /* min-width: 14rem; */
-    padding: 2rem 1.5rem;
+    padding: 3rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
@@ -440,6 +440,42 @@ textarea {
     font-style: italic;
     gap: 0.2rem;
     font-size: 0.7rem;
+}
+
+.toggle-status-btn-not-read, .toggle-status-btn-read {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: white;
+    border: 1px solid rgb(110, 110, 110);
+    border-radius: 8px;
+    padding: 0.2rem 0.4rem;
+    line-height: 1;
+    font-size: 0.85rem;
+    transform: translateY(-2px);
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.toggle-status-btn-not-read:hover {
+    /* color: #fff; */
+    /* background-color: #c7c7c7; */
+    box-shadow: rgba(0, 0, 0, 0.20) 0 4px 8px;
+    cursor: pointer;
+}
+  
+.toggle-status-btn-not-read:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.toggle-status-btn-read:hover {
+    pointer-events: none;
+}
+
+.toggle-status-btn-read:disabled {
+    color: black;
 }
 
 .review-btn, .back-to-card  {
@@ -579,7 +615,7 @@ textarea {
 
 .card-synopsis:has(+ .read-more:checked) {
     max-height: 15rem;
-    padding-bottom: 1rem;
+    /* padding-bottom: 1rem; */
 }
 
 .card-pages {
@@ -587,14 +623,14 @@ textarea {
     font-size: 0.9rem;
     font-weight: bold;
     font-style: italic;
-    right: 0.6rem;
-    top: 0.4rem;
+    right: 1.5rem;
+    top: 1.5rem;
 }
 
 .card-genre {
     position: absolute;
     font-size: 0.9rem;
-    color: rgb(22, 90, 22);
+    color: #165a16;
     font-style: italic;
     font-weight: bold;
     bottom: 1.5rem;
