@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // using array to store all the books in the library
-  const myLibrary = [];
+  let myLibrary = [];
   const addBookBtn = document.querySelector(".add-book-btn");
   const bookStatCheckBox = document.getElementById("book-status");
   const ratingsDiv = document.querySelector(".rating-group");
@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function Book(title, author, genre, synopsis, pages, review, hasRead, rating) {
+      this.id = Book.idCounter++;
       this.title = title;
       this.author = author;
       this.genre = genre;
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       this.hasRead = hasRead;
       this.rating = rating;
   }
+  Book.idCounter = 0;
 
   function addBookToLibrary(data) {
     if (data.has("book-status")) {
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     myLibrary.forEach(book => {
       const card = document.createElement("div");
       card.classList.add("card-body");
+      card.dataset.id = book.id;
 
       const cardFront = document.createElement("div");
       cardFront.classList.add("card-front");
@@ -166,6 +169,15 @@ document.addEventListener('DOMContentLoaded', function() {
       cardFront.appendChild(pages);
       cardFront.appendChild(toggleStatusButton);
 
+      const deleteBookBtn = document.createElement("button");
+      deleteBookBtn.classList.add("delete-book");
+      deleteBookBtn.innerHTML = '<i class="fa-solid fa-trash-can" style="color: #949494;"></i>';
+      deleteBookBtn.title = "Delete book";
+      deleteBookBtn.dataset.id = book.id;
+
+      cardFront.appendChild(deleteBookBtn);
+      card.appendChild(cardFront);
+
       // card back stuff
       if (book.hasRead && (book.review !== null || book.review !== "")) {
         const cardReview = document.createElement('p');
@@ -179,12 +191,8 @@ document.addEventListener('DOMContentLoaded', function() {
         cardBack.appendChild(cardReview);
         cardBack.appendChild(backButton);
 
-        card.appendChild(cardFront);
         card.appendChild(cardBack);
       }  
-      else {
-        card.appendChild(cardFront);
-      }
 
       bookCollection.appendChild(card);
     });
@@ -231,6 +239,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   bookCollection.addEventListener('click', function(event) {
     const target = event.target;
+
+    // Handle clicks on the delete button
+    if (target.closest('.delete-book')) {
+      const deleteButton = target.closest('.delete-book');
+      const bookId = parseInt(deleteButton.dataset.id);
+
+      const bookIndex = myLibrary.findIndex(book => book.id === bookId);
+      if (bookIndex !== -1) {
+          myLibrary.splice(bookIndex, 1);
+          displayBooks();
+      }
+    }
 
     // Handle clicks on the review button
     if (target.closest('.review-btn')) {
