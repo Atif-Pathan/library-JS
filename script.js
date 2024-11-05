@@ -12,6 +12,54 @@ document.addEventListener('DOMContentLoaded', function() {
   const backToCardBtn = document.querySelector(".back-to-card");
   const modal = document.getElementById("add-book-modal");
   const container = document.querySelector(".container");
+  let isEditing = false; 
+  let editingBookId = null;
+
+  function openEditModal(book) {
+      isEditing = true;
+      editingBookId = book.id;
+
+      modal.style.display = "block";
+      addBookForm.style.display = "grid";
+      container.classList.add("blur");
+
+      // Pre-fill the form fields with the book's data
+      document.getElementById("title").value = book.title;
+      document.getElementById("author").value = book.author;
+      document.getElementById("genre").value = book.genre;
+      document.getElementById("synopsis").value = book.synopsis;
+      document.getElementById("pages").value = book.pages;
+      document.getElementById("book-status").checked = true;
+
+      // Show the rating and review fields
+      bookStatCheckBox.dispatchEvent(new Event("change"));
+
+      // Set the rating
+      if (book.rating !== null) {
+          const ratingInputs = document.getElementsByName("rating2");
+          ratingInputs.forEach(input => {
+              if (input.value == book.rating) {
+                  input.checked = true;
+              }
+          });
+      }
+
+      // Set the review
+      if (book.review !== null) {
+          document.getElementById("book-review").value = book.review;
+      }
+
+      // Disable all fields except rating and review
+      document.getElementById("title").disabled = true;
+      document.getElementById("author").disabled = true;
+      document.getElementById("genre").disabled = true;
+      document.getElementById("synopsis").disabled = true;
+      document.getElementById("pages").disabled = true;
+      document.getElementById("book-status").disabled = true;
+
+      // Focus on the rating input
+      document.getElementsByName("rating2")[0].focus();
+  }
 
   // Close the modal when clicking outside the modal content
   window.addEventListener("click", function(event) {
@@ -37,13 +85,30 @@ document.addEventListener('DOMContentLoaded', function() {
   Book.idCounter = 0;
 
   function addBookToLibrary(data) {
-    if (data.has("book-status")) {
-      newBook = new Book(data.get("title"), data.get("author"), data.get("genre"), data.get("synopsis"), data.get("pages"), data.get("review"), true, data.get("rating2"));
-    }
+
+    if (isEditing) {
+      // Update the existing book
+      const book = myLibrary.find(book => book.id === editingBookId);
+      if (book) {
+          // Update the rating and review
+          book.hasRead = true;
+          book.rating = data.get("rating2");
+          book.review = data.get("review");
+      }
+      isEditing = false;
+      editingBookId = null;
+    } 
     else {
-      newBook = new Book(data.get("title"), data.get("author"), data.get("genre"), data.get("synopsis"), data.get("pages"), null, false, null);
+      let newBook;
+      if (data.has("book-status")) {
+        newBook = new Book(data.get("title"), data.get("author"), data.get("genre"), data.get("synopsis"), data.get("pages"), data.get("review"), true, data.get("rating2"));
+      }
+      else {
+        newBook = new Book(data.get("title"), data.get("author"), data.get("genre"), data.get("synopsis"), data.get("pages"), null, false, null);
+      }
+      myLibrary.push(newBook);
     }
-    myLibrary.push(newBook);
+
     console.log(myLibrary);
     cancelBtn.dispatchEvent(new Event("click"));
     displayBooks();
@@ -125,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleStatusButton.innerHTML = 'Status: <i class="fa-solid fa-circle-xmark" style="color: #ff0000;"></i>';
         toggleStatusButton.classList.add('toggle-status-btn-not-read');
         toggleStatusButton.title = "Press to mark this book as read and add a rating/review";
+        toggleStatusButton.disabled = false;
       }
       
       if (book.review !== null && book.review  !== "") {
@@ -211,6 +277,18 @@ document.addEventListener('DOMContentLoaded', function() {
     container.classList.remove("blur");
     addBookForm.reset();
     bookStatCheckBox.dispatchEvent(new Event("change"));
+
+    // Re-enable all form fields
+    document.getElementById("title").disabled = false;
+    document.getElementById("author").disabled = false;
+    document.getElementById("genre").disabled = false;
+    document.getElementById("synopsis").disabled = false;
+    document.getElementById("pages").disabled = false;
+    document.getElementById("book-status").disabled = false;
+
+    // Reset editing flags
+    isEditing = false;
+    editingBookId = null;
   });
 
   bookStatCheckBox.addEventListener("change", function() {
@@ -239,6 +317,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   bookCollection.addEventListener('click', function(event) {
     const target = event.target;
+
+    // Handle clicks on the toggle status button
+    if (target.closest('.toggle-status-btn-not-read')) {
+      const toggleButton = target.closest('.toggle-status-btn-not-read');
+      const card = toggleButton.closest('.card-body');
+      const bookId = parseInt(card.dataset.id);
+
+      // Find the book in the myLibrary array
+      const book = myLibrary.find(book => book.id === bookId);
+
+      if (book) {
+          // Open the modal to edit the book's rating and review
+          openEditModal(book);
+      }
+    }
 
     // Handle clicks on the delete button
     if (target.closest('.delete-book')) {
