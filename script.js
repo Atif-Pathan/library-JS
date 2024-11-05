@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const container = document.querySelector(".container");
   let isEditing = false; 
   let editingBookId = null;
+  let currentEditMode = null;
 
-  function openEditModal(book) {
+  function openEditModal(book, editMode) {
       isEditing = true;
       editingBookId = book.id;
+      currentEditMode = editMode;
 
       modal.style.display = "block";
       addBookForm.style.display = "grid";
@@ -29,9 +31,15 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById("genre").value = book.genre;
       document.getElementById("synopsis").value = book.synopsis;
       document.getElementById("pages").value = book.pages;
-      document.getElementById("book-status").checked = true;
 
-      // Show the rating and review fields
+      if (editMode) {
+        // Set the read status
+        document.getElementById("book-status").checked = book.hasRead;
+      } else {
+        document.getElementById("book-status").checked = true;
+      }
+
+      // Show or hide the rating and review fields based on read status
       bookStatCheckBox.dispatchEvent(new Event("change"));
 
       // Set the rating
@@ -47,15 +55,38 @@ document.addEventListener('DOMContentLoaded', function() {
       // Set the review
       if (book.review !== null) {
           document.getElementById("book-review").value = book.review;
+      } else {
+        document.getElementById("book-review").value = '';
       }
 
-      // Disable all fields except rating and review
-      document.getElementById("title").disabled = true;
-      document.getElementById("author").disabled = true;
-      document.getElementById("genre").disabled = true;
-      document.getElementById("synopsis").disabled = true;
-      document.getElementById("pages").disabled = true;
-      document.getElementById("book-status").disabled = true;
+      // Enable or disable form fields based on editMode
+      const formElements = addBookForm.elements;
+      for (let i = 0; i < formElements.length; i++) {
+          const element = formElements[i];
+          const fieldId = element.id;
+          const fieldType = element.type;
+
+          if (editMode) {
+              element.disabled = false;
+          } else {
+              // Only rating and review are editable, buttons should remain enabled
+              const isRatingOrReviewField = fieldId === 'book-review' || fieldId.startsWith('rating2');
+              const isButton = fieldType === 'submit' || fieldType === 'button';
+
+              if (isRatingOrReviewField || isButton) {
+                  element.disabled = false;
+              } else {
+                  element.disabled = true;
+              }
+          }
+      }
+
+      // Focus on the first editable field
+      if (editMode) {
+          document.getElementById("title").focus();
+      } else {
+          document.getElementById("book-review").focus();
+      }
 
       // Focus on the rating input
       document.getElementsByName("rating2")[0].focus();
@@ -90,21 +121,51 @@ document.addEventListener('DOMContentLoaded', function() {
       // Update the existing book
       const book = myLibrary.find(book => book.id === editingBookId);
       if (book) {
-          // Update the rating and review
-          book.hasRead = true;
-          book.rating = data.get("rating2");
-          book.review = data.get("review");
+          if (currentEditMode) {
+              // Editing all fields
+              book.title = data.get("title");
+              book.author = data.get("author");
+              book.genre = data.get("genre");
+              book.synopsis = data.get("synopsis");
+              book.pages = data.get("pages");
+              book.hasRead = data.has("book-status");
+              book.rating = book.hasRead ? data.get("rating2") : null;
+              book.review = book.hasRead ? data.get("review") : null;
+          } else {
+              // Only updating rating and review
+              book.hasRead = true;
+              book.rating = data.get("rating2");
+              book.review = data.get("review");
+          }
       }
       isEditing = false;
       editingBookId = null;
-    } 
-    else {
+      currentEditMode = null;
+    } else {
+      // Add a new book
       let newBook;
       if (data.has("book-status")) {
-        newBook = new Book(data.get("title"), data.get("author"), data.get("genre"), data.get("synopsis"), data.get("pages"), data.get("review"), true, data.get("rating2"));
-      }
-      else {
-        newBook = new Book(data.get("title"), data.get("author"), data.get("genre"), data.get("synopsis"), data.get("pages"), null, false, null);
+          newBook = new Book(
+              data.get("title"),
+              data.get("author"),
+              data.get("genre"),
+              data.get("synopsis"),
+              data.get("pages"),
+              data.get("review"),
+              true,
+              data.get("rating2")
+          );
+      } else {
+          newBook = new Book(
+              data.get("title"),
+              data.get("author"),
+              data.get("genre"),
+              data.get("synopsis"),
+              data.get("pages"),
+              null,
+              false,
+              null
+          );
       }
       myLibrary.push(newBook);
     }
@@ -241,7 +302,14 @@ document.addEventListener('DOMContentLoaded', function() {
       deleteBookBtn.title = "Delete book";
       deleteBookBtn.dataset.id = book.id;
 
+      const editBookBtn = document.createElement("button");
+      editBookBtn.classList.add("edit-book-btn");
+      editBookBtn.innerHTML = '<i class="fa-solid fa-pen-to-square" style="color: #949494;"></i>';
+      editBookBtn.title = "Edit book";
+      editBookBtn.dataset.id = book.id;
+
       cardFront.appendChild(deleteBookBtn);
+      cardFront.appendChild(editBookBtn);
       card.appendChild(cardFront);
 
       // card back stuff
@@ -289,6 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Reset editing flags
     isEditing = false;
     editingBookId = null;
+    currentEditMode = null;
   });
 
   bookStatCheckBox.addEventListener("change", function() {
@@ -318,6 +387,19 @@ document.addEventListener('DOMContentLoaded', function() {
   bookCollection.addEventListener('click', function(event) {
     const target = event.target;
 
+    if (target.closest('.edit-book-btn')) {
+      const editButton = target.closest('.edit-book-btn');
+      const card = editButton.closest('.card-body');
+      const bookId = parseInt(card.dataset.id);
+
+      // Find the book in the myLibrary array
+      const book = myLibrary.find(book => book.id === bookId);
+
+      if (book) {
+          openEditModal(book, true);
+      }
+    }
+
     // Handle clicks on the toggle status button
     if (target.closest('.toggle-status-btn-not-read')) {
       const toggleButton = target.closest('.toggle-status-btn-not-read');
@@ -329,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (book) {
           // Open the modal to edit the book's rating and review
-          openEditModal(book);
+          openEditModal(book, false);
       }
     }
 
