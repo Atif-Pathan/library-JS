@@ -458,4 +458,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  displayBooks();
 });
